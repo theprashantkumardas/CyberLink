@@ -11,20 +11,37 @@ const socketManager = require('./sockets/socketManager');
 const app = express();
 const server = http.createServer(app);
 
-// --- 1. DEFINE ALLOWED ORIGINS ---
-// List every URL that needs to access your backend
+// --- 1. ALLOWED ORIGINS ---
+// EXACT URL of your frontend (No trailing slash)
 const allowedOrigins = [
-  "http://localhost:3000",                  // Localhost for development
-  "https://cyberlink-404.onrender.com"      // Your DEPLOYED Frontend
+  "http://localhost:3000",
+  "https://cyberlink-404.onrender.com" 
 ];
 
-// --- 2. CONFIGURE EXPRESS CORS ---
-// We do this BEFORE any routes
-app.use(cors({
-  origin: allowedOrigins,
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true // Allow cookies/headers if needed
-}));
+// --- 2. CORS OPTIONS ---
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, Postman, or server-to-server)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log("BLOCKED BY CORS:", origin); // Log the blocked origin for debugging
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+};
+
+// --- 3. APPLY MIDDLEWARE ---
+// Apply CORS before anything else
+app.use(cors(corsOptions));
+
+// Explicitly handle Preflight (OPTIONS) requests
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 
@@ -34,16 +51,16 @@ connectDB();
 // Routes
 app.use('/auth', authRoutes);
 
-// --- 3. CONFIGURE SOCKET.IO CORS ---
-const io = new Server(server, { 
-  cors: { 
-    origin: allowedOrigins, // Use the same specific list
-    methods: ["GET", "POST"],
-    credentials: true
-  } 
+// Health Check Route (To see if server is awake)
+app.get('/', (req, res) => {
+  res.send('CYBER_LINK SERVER ONLINE');
 });
 
-// Socket Logic
+// --- 4. SOCKET.IO SETUP ---
+const io = new Server(server, { 
+  cors: corsOptions // Reuse the same strict options
+});
+
 socketManager(io);
 
 const PORT = process.env.PORT || 5000;
