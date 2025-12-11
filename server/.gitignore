@@ -1,0 +1,83 @@
+### 🚀 Universal Global Ignores ###
+
+# Dependency Directories
+/node_modules
+/venv/
+/env/
+# Windows and OS X/Linux system files
+.DS_Store
+Thumbs.db
+
+### 💻 Frontend (e.g., React, Vue, Angular) Specific Ignores ###
+
+# Built/Compiled/Transpiled files and directories
+# Change 'dist' if your build output is different (e.g., 'build', 'out')
+/dist
+/build
+/out
+/esnext
+/lib
+/tmp
+
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data/cache
+.npm
+.yarn
+.cache
+.eslintcache
+.prettiercache
+/coverage
+/public/static/
+
+# IDE/Editor files (e.g., VS Code)
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Environment variables
+.env
+.env.development
+.env.production
+.env.*.local
+
+### ⚙️ Backend Specific Ignores ###
+
+# Python/Django Specific
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+# Distribution / packaging
+.Python
+# Temporary files (e.g., generated during testing)
+/htmlcov/
+.coverage
+
+# NodeJS Backend Specific (already covered by frontend, but listing for clarity)
+# /node_modules
+# /dist
+
+# Go Specific (if applicable)
+*.exe
+*.dll
+*.so
+/pkg/
+
+# Java/Maven/Gradle Specific (if applicable)
+/target/
+/bin/
+*.class
+
+# SQLite database file (common for development)
+*.sqlite
+*.db
+
+# Other common OS and editor temporary files
+*~
+*.swp
