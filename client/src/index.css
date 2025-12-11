@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  /* background-color: #050505; */
+  background-color: #000000;
+  color: #00ff00;
+  /* text-shadow: 0 0 4px rgba(0, 255, 0, 0.6); The Neon Glow */
+}
+
+/* Scrollbar Hiding */
+/* ::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #001100; }
+::-webkit-scrollbar-thumb { background: #003300; } */
+
+::-webkit-scrollbar { width: 0px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #000; }
